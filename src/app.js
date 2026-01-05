@@ -6,6 +6,7 @@ import { AppError, errorHandler } from '#middlewares/error.js';
 
 import indexRouter from '#routes/index.route.js';
 import authRouter from '#routes/auth.route.js';
+import expensesRouter from '#routes/expenses.route.js';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/expenses', expensesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
