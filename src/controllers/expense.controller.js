@@ -24,11 +24,14 @@ export const createExpense = async (req, res) => {
 
 export const getAllExpenses = async (req, res) => {
   const { sub: id } = req.user;
-  const { page, limit } = req.locals.query;
+  const { page, limit, start_date, end_date } = req.locals.query;
+  console.log(req.locals.query);
   const { expenses, total } = await ExpenseService.getAllExpenses(
     id,
     page,
-    limit
+    limit,
+    start_date,
+    end_date
   );
 
   const totalPages = Math.ceil(total / limit);
