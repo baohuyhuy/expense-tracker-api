@@ -5,6 +5,7 @@ import cors from 'cors';
 import { AppError, errorHandler } from '#middlewares/error.js';
 
 import indexRouter from '#routes/index.route.js';
+import authRouter from '#routes/auth.route.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
