@@ -2,7 +2,10 @@ import { Router } from 'express';
 import * as expenseController from '#controllers/expense.controller.js';
 import { authenticateToken } from '#middlewares/auth.js';
 import { validate } from '#middlewares/validator.js';
-import { createExpenseSchema } from '#validations/expense.schema.js';
+import {
+  createExpenseSchema,
+  getAllExpensesSchema,
+} from '#validations/expense.schema.js';
 
 const router = Router();
 
@@ -12,6 +15,11 @@ router.post(
   authenticateToken,
   expenseController.createExpense
 );
-router.get('/', authenticateToken, expenseController.getAllExpenses);
+router.get(
+  '/',
+  validate(getAllExpensesSchema),
+  authenticateToken,
+  expenseController.getAllExpenses
+);
 
 export default router;

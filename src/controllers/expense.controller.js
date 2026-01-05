@@ -24,11 +24,23 @@ export const createExpense = async (req, res) => {
 
 export const getAllExpenses = async (req, res) => {
   const { sub: id } = req.user;
-  const expenses = await ExpenseService.getAllExpenses(id);
+  const { page, limit } = req.locals.query;
+  const { expenses, total } = await ExpenseService.getAllExpenses(
+    id,
+    page,
+    limit
+  );
 
+  const totalPages = Math.ceil(total / limit);
   res.status(200).json({
     status: 'success',
     message: 'Expenses fetched successfully',
+    meta: {
+      page,
+      per_page: limit,
+      total,
+      total_pages: totalPages,
+    },
     data: expenses,
   });
 };

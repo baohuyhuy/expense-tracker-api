@@ -9,3 +9,10 @@ export const createExpenseSchema = z.object({
     date: z.coerce.date().optional(),
   }),
 });
+
+export const getAllExpensesSchema = z.object({
+  query: z.object({
+    page: z.coerce.number().optional().default(1),
+    limit: z.coerce.number().optional().default(10),
+  }),
+});

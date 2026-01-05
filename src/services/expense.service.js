@@ -19,7 +19,12 @@ export const createExpense = async ({
   return expense;
 };
 
-export const getAllExpenses = async (id) => {
-  const expenses = await Expense.findAll({ user_id: id });
-  return expenses;
+export const getAllExpenses = async (id, page, limit) => {
+  const [expenses, total] = await Promise.all([
+    Expense.findAll({ user_id: id })
+      .offset((page - 1) * limit)
+      .limit(limit),
+    Expense.count({ user_id: id }).then((result) => Number(result[0].total)),
+  ]);
+  return { expenses, total };
 };
