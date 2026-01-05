@@ -102,3 +102,18 @@ export const updateExpense = async (id, userId, updateData) => {
     ]);
   return updatedExpense;
 };
+
+export const deleteExpense = async (id, userId) => {
+  const expense = await db('expenses')
+    .where('expenses.id', id)
+    .join('users', 'expenses.user_id', 'users.id')
+    .select('expenses.*', 'users.email as owner_email')
+    .first();
+  if (!expense) {
+    throw new AppError('Expense not found', 404);
+  }
+  if (expense.user_id !== userId) {
+    throw new AppError('Access denied', 403);
+  }
+  await db('expenses').where('expenses.id', id).delete();
+};

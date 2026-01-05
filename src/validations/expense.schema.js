@@ -40,3 +40,9 @@ export const updateExpenseSchema = z.object({
     date: z.string().optional(),
   }),
 });
+
+export const deleteExpenseSchema = z.object({
+  params: z.object({
+    id: z.coerce.number().positive('Id must be a positive number'),
+  }),
+});

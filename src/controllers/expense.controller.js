@@ -67,3 +67,10 @@ export const updateExpense = async (req, res) => {
     data: expense,
   });
 };
+
+export const deleteExpense = async (req, res) => {
+  const { id } = req.params;
+  const { sub: userId } = req.user;
+  await ExpenseService.deleteExpense(id, userId);
+  res.status(204).send();
+};
