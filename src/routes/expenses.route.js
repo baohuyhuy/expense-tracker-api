@@ -6,6 +6,7 @@ import {
   createExpenseSchema,
   getAllExpensesSchema,
   getExpenseByIdSchema,
+  updateExpenseSchema,
 } from '#validations/expense.schema.js';
 
 const router = Router();
@@ -28,5 +29,10 @@ router.get(
   authenticateToken,
   expenseController.getExpenseById
 );
-
+router.patch(
+  '/:id',
+  validate(updateExpenseSchema),
+  authenticateToken,
+  expenseController.updateExpense
+);
 export default router;

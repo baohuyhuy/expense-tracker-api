@@ -6,7 +6,7 @@ export const createExpenseSchema = z.object({
     description: z.string().trim().optional(),
     amount: z.coerce.number().positive('Amount must be greater than 0'),
     category: z.string().trim().optional(),
-    date: z.coerce.date().optional(),
+    date: z.string().optional(),
   }),
 });
 
@@ -22,5 +22,21 @@ export const getAllExpensesSchema = z.object({
 export const getExpenseByIdSchema = z.object({
   params: z.object({
     id: z.coerce.number().positive('Id must be a positive number'),
+  }),
+});
+
+export const updateExpenseSchema = z.object({
+  params: z.object({
+    id: z.coerce.number().positive('Id must be a positive number'),
+  }),
+  body: z.object({
+    title: z.string().trim().optional(),
+    description: z.string().trim().optional(),
+    amount: z.coerce
+      .number()
+      .positive('Amount must be greater than 0')
+      .optional(),
+    category: z.string().trim().optional(),
+    date: z.string().optional(),
   }),
 });

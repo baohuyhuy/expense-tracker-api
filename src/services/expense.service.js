@@ -71,3 +71,34 @@ export const getExpenseById = async (id, userId) => {
   }
   return expense;
 };
+
+export const updateExpense = async (id, userId, updateData) => {
+  const expense = await db('expenses')
+    .where('expenses.id', id)
+    .join('users', 'expenses.user_id', 'users.id')
+    .select('expenses.*', 'users.email as owner_email')
+    .first();
+  if (!expense) {
+    throw new AppError('Expense not found', 404);
+  }
+  if (expense.user_id !== userId) {
+    throw new AppError('Access denied', 403);
+  }
+
+  updateData.updated_at = db.fn.now();
+
+  const [updatedExpense] = await db('expenses')
+    .where('expenses.id', id)
+    .update(updateData, [
+      'id',
+      'title',
+      'description',
+      'amount',
+      'category',
+      'date',
+      'user_id',
+      'created_at',
+      'updated_at',
+    ]);
+  return updatedExpense;
+};

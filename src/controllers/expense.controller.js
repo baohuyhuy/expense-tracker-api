@@ -55,3 +55,15 @@ export const getExpenseById = async (req, res) => {
     data: expense,
   });
 };
+
+export const updateExpense = async (req, res) => {
+  const { id } = req.params;
+  const { sub: userId } = req.user;
+  const updateData = req.body;
+  const expense = await ExpenseService.updateExpense(id, userId, updateData);
+  res.status(200).json({
+    status: 'success',
+    message: 'Expense updated successfully',
+    data: expense,
+  });
+};
