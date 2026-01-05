@@ -18,3 +18,9 @@ export const getAllExpensesSchema = z.object({
     end_date: z.string().optional(),
   }),
 });
+
+export const getExpenseByIdSchema = z.object({
+  params: z.object({
+    id: z.coerce.number().positive('Id must be a positive number'),
+  }),
+});

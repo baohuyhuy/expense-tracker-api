@@ -5,6 +5,7 @@ import { validate } from '#middlewares/validator.js';
 import {
   createExpenseSchema,
   getAllExpensesSchema,
+  getExpenseByIdSchema,
 } from '#validations/expense.schema.js';
 
 const router = Router();
@@ -20,6 +21,12 @@ router.get(
   validate(getAllExpensesSchema),
   authenticateToken,
   expenseController.getAllExpenses
+);
+router.get(
+  '/:id',
+  validate(getExpenseByIdSchema),
+  authenticateToken,
+  expenseController.getExpenseById
 );
 
 export default router;

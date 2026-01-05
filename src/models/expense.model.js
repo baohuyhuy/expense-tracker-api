@@ -12,5 +12,6 @@ export const Expense = {
       'user_id',
     ]),
   findAll: (filter) => db('expenses').where(filter).orderBy('date', 'desc'),
+  findOne: (filter) => db('expenses').where(filter).first(),
   count: (filter) => db('expenses').where(filter).count('id as total'),
 };

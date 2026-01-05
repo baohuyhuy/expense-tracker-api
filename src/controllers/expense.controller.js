@@ -4,8 +4,6 @@ export const createExpense = async (req, res) => {
   const { title, description, amount, category, date } = req.body;
   const { sub: user_id } = req.user;
 
-  console.log(req.body);
-
   const expense = await ExpenseService.createExpense({
     title,
     description,
@@ -25,7 +23,6 @@ export const createExpense = async (req, res) => {
 export const getAllExpenses = async (req, res) => {
   const { sub: id } = req.user;
   const { page, limit, start_date, end_date } = req.locals.query;
-  console.log(req.locals.query);
   const { expenses, total } = await ExpenseService.getAllExpenses(
     id,
     page,
@@ -45,5 +42,15 @@ export const getAllExpenses = async (req, res) => {
       total_pages: totalPages,
     },
     data: expenses,
+  });
+};
+
+export const getExpenseById = async (req, res) => {
+  const { id } = req.params;
+  const expense = await ExpenseService.getExpenseById(id);
+  res.status(200).json({
+    status: 'success',
+    message: 'Expense fetched successfully',
+    data: expense,
   });
 };
