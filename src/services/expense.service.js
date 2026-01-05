@@ -18,3 +18,8 @@ export const createExpense = async ({
   });
   return expense;
 };
+
+export const getAllExpenses = async (id) => {
+  const expenses = await Expense.findAll({ user_id: id });
+  return expenses;
+};

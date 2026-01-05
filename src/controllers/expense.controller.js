@@ -21,3 +21,14 @@ export const createExpense = async (req, res) => {
     data: expense,
   });
 };
+
+export const getAllExpenses = async (req, res) => {
+  const { sub: id } = req.user;
+  const expenses = await ExpenseService.getAllExpenses(id);
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Expenses fetched successfully',
+    data: expenses,
+  });
+};

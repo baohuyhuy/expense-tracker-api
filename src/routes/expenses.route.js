@@ -12,5 +12,6 @@ router.post(
   authenticateToken,
   expenseController.createExpense
 );
+router.get('/', authenticateToken, expenseController.getAllExpenses);
 
 export default router;

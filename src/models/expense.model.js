@@ -11,4 +11,5 @@ export const Expense = {
       'date',
       'user_id',
     ]),
+  findAll: (filter) => db('expenses').where(filter).orderBy('date', 'desc'),
 };
