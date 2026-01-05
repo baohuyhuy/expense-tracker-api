@@ -47,7 +47,8 @@ export const getAllExpenses = async (req, res) => {
 
 export const getExpenseById = async (req, res) => {
   const { id } = req.params;
-  const expense = await ExpenseService.getExpenseById(id);
+  const { sub: userId } = req.user;
+  const expense = await ExpenseService.getExpenseById(id, userId);
   res.status(200).json({
     status: 'success',
     message: 'Expense fetched successfully',
