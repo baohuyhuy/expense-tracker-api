@@ -12,3 +12,10 @@ export const registerSchema = z.object({
     avatar: z.url('Invalid avatar URL').trim(),
   }),
 });
+
+export const loginSchema = z.object({
+  body: z.object({
+    email: z.email('Invalid email address').toLowerCase().trim(),
+    password: z.string().min(1, 'Password is required').trim(),
+  }),
+});

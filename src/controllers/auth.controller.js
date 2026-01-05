@@ -17,3 +17,18 @@ export const register = async (req, res) => {
     data: user,
   });
 };
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  const { token, user } = await AuthService.login({ email, password });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'User logged in successfully',
+    data: {
+      token,
+      user,
+    },
+  });
+};

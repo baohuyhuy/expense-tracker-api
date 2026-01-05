@@ -1,6 +1,7 @@
 import { User } from '#models/user.model.js';
 import { AppError } from '#middlewares/error.js';
-import { hashPassword } from '#utils/password.js';
+import { hashPassword, verifyPassword } from '#utils/password.js';
+import { generateToken } from '#utils/token.js';
 
 export const register = async ({
   email,
@@ -23,4 +24,17 @@ export const register = async ({
     avatar,
   });
   return newUser;
+};
+
+export const login = async ({ email, password }) => {
+  const user = await User.findOne({ email }).select(
+    'id',
+    'hash_password',
+    'role'
+  );
+  if (!user || !(await verifyPassword(password, user.hash_password))) {
+    throw new AppError('Invalid email or password', 401);
+  }
+  const token = generateToken({ sub: user.id, role: user.role });
+  return { token, user: { id: user.id, role: user.role } };
 };
